@@ -1,0 +1,20 @@
+# Local environment and credentials
+**/.env
+**/.env.*
+!**/.env.example
+
+# Dependencies, build output, and local tooling
+**/node_modules/
+**/.next/
+**/.venv/
+**/venv/
+**/__pycache__/
+.qodo/
+
+# Local databases and generated Python files
+**/db.sqlite3
+**/*.py[cod]
+
+# Operating system files
+.DS_Store
+Thumbs.db

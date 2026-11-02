@@ -1,0 +1,276 @@
+{
+ "posts": [
+  {
+   "slug": "words",
+   "tone": "indigo",
+   "tag": {
+    "en": "Basics",
+    "ha": "Tushe",
+    "yo": "Ìpìlẹ̀",
+    "ig": "Ntọala"
+   },
+   "title": {
+    "en": "Neurodiverse or neurodivergent? The words matter",
+    "ha": "Neurodiverse ko neurodivergent? Kalmomin na da muhimmanci",
+    "yo": "Neurodiverse tàbí neurodivergent? Àwọn ọ̀rọ̀ náà ṣe pàtàkì",
+    "ig": "Neurodiverse ka neurodivergent? Okwu ndị a dị mkpa"
+   },
+   "summary": {
+    "en": "Two similar words with different meanings, and why we use both.",
+    "ha": "Kalmomi biyu masu kama da juna amma ma’anoninsu daban, da dalilin da ya sa muke amfani da su duka.",
+    "yo": "Ọ̀rọ̀ méjì tó jọra ṣùgbọ́n ìtumọ̀ wọn yàtọ̀, àti ìdí tí a fi ń lò méjèèjì.",
+    "ig": "Okwu abụọ yiri ibe ha mana nwere nkọwa dị iche, na ihe mere anyị ji eji ha abụọ."
+   },
+   "cover_image": "blog/covers/words.png",
+   "cover_alt": "Abstract indigo illustration of connected ideas",
+   "body": "Neurodiversity describes the natural variation in how human brains work. It is a fact about a group, like biodiversity. A classroom, a family or a country can be neurodiverse.\n\nNeurodivergent describes an individual whose brain works differently from what is typically expected. That includes people who are autistic, have ADHD or dyslexia, and others. The term neurotypical describes people whose thinking fits that typical expectation.\n\nThe word neurodiversity was popularised in the late 1990s by the sociologist Judy Singer. The idea behind it is simple: differences in thinking are part of human variety, and people do better when environments adapt instead of expecting everyone to fit one mould.",
+   "note": "A person is neurodivergent. A community is neurodiverse.",
+   "source": "Singer, J. (1999). “Why can’t you be normal for once in your life?” In Disability Discourse. Open University Press."
+  },
+  {
+   "slug": "class",
+   "tone": "green",
+   "tag": {
+    "en": "Education",
+    "ha": "Ilimi",
+    "yo": "Ẹ̀kọ́",
+    "ig": "Agụmakwụkwọ"
+   },
+   "title": {
+    "en": "Five signs a classroom isn’t working for a neurodivergent student",
+    "ha": "Alamu biyar da ke nuna ajin karatu bai dace da ɗalibi mai bambancin kwakwalwa ba",
+    "yo": "Àmì márùn-ún tí kíláàsì kò bá akẹ́kọ̀ọ́ tí ọpọlọ rẹ̀ yàtọ̀ mu",
+    "ig": "Ihe ịrịba ama ise na-egosi na klaasị adịghị arụ ọrụ maka nwa akwụkwọ ụbụrụ ya dị iche"
+   },
+   "summary": {
+    "en": "Often it is not about effort. It is about the environment.",
+    "ha": "Sau da yawa ba game da ƙoƙari ba ne. Yanayi ne.",
+    "yo": "Ó pọ̀ ìgbà, kì í ṣe nípa ìsapá. Àyíká ni.",
+    "ig": "Ọtụtụ oge, ọ bụghị banyere mgbalị. Gburugburu ya bụ."
+   },
+   "cover_image": "blog/covers/class.png",
+   "cover_alt": "Abstract green illustration of a calm learning space",
+   "body": "A student who looks distracted, restless or withdrawn may be reacting to noise, unclear instructions or long stretches of passive listening. Labelling them lazy hides the real cause.\n\nWatch for repeated incomplete work despite clear ability, strong distress at changes in routine, avoiding reading or writing aloud, difficulty following spoken multi-step instructions, and exhaustion after school.\n\nMany helpful changes cost nothing: written and spoken instructions together, a quiet corner, extra time, and breaking tasks into steps. The Universal Design for Learning framework recommends offering more than one way to take in information and show understanding.",
+   "note": "Change the task or space first, then judge the student.",
+   "source": "CAST (2018). Universal Design for Learning Guidelines version 2.2. udlguidelines.cast.org"
+  },
+  {
+   "slug": "work",
+   "tone": "gold",
+   "tag": {
+    "en": "Work",
+    "ha": "Aiki",
+    "yo": "Iṣẹ́",
+    "ig": "Ọrụ"
+   },
+   "title": {
+    "en": "How to support a neurodivergent colleague",
+    "ha": "Yadda za a tallafa wa abokin aiki mai bambancin kwakwalwa",
+    "yo": "Bí a ṣe lè ṣe àtìlẹ́yìn fún alábàáṣiṣẹ́ tí ọpọlọ rẹ̀ yàtọ̀",
+    "ig": "Otu esi akwado onye ọrụ ibe ụbụrụ ya dị iche"
+   },
+   "summary": {
+    "en": "Small, specific adjustments, agreed with the person, go a long way.",
+    "ha": "Ƙananan gyare-gyare na musamman, da aka amince da mutumin, na taimakawa sosai.",
+    "yo": "Àwọn àtúnṣe kékeré tó ṣe pàtó, tí a gbà pẹ̀lú ẹni náà, ń ṣe ànfàní púpọ̀.",
+    "ig": "Mgbanwe nta doro anya, nke e kwekọrịtara na onye ahụ, na-enye aka nke ukwuu."
+   },
+   "cover_image": "blog/covers/work.png",
+   "cover_alt": "Abstract gold illustration of a connected workplace",
+   "body": "Do not guess what someone needs. Ask: what helps you do your best work? Needs differ widely, even between two people with the same diagnosis.\n\nCommon adjustments include written follow-ups after meetings, agendas shared in advance, flexible hours, quieter workspaces and clear, direct feedback.\n\nResearch on neurodiversity at work argues that many neurodivergent people bring strengths such as sustained focus, pattern recognition and creative problem solving, but that these show up only when the workplace fits them. Treat strengths and support needs as both true.",
+   "note": "Ask, agree, write it down, and review it together.",
+   "source": "Doyle, N. (2020). Neurodiversity at work: a biopsychosocial model and the impact on working adults. British Medical Bulletin, 135(1), 108–125."
+  },
+  {
+   "slug": "assess",
+   "tone": "rose",
+   "tag": {
+    "en": "Support",
+    "ha": "Tallafi",
+    "yo": "Àtìlẹ́yìn",
+    "ig": "Nkwado"
+   },
+   "title": {
+    "en": "If you think your child may be neurodivergent, where to start",
+    "ha": "Idan kana tsammanin yaronka yana da bambancin kwakwalwa, ga inda za ka fara",
+    "yo": "Tí o bá rò pé ọmọ rẹ lè ní ọpọlọ tó yàtọ̀, níbi tí o ti lè bẹ̀rẹ̀",
+    "ig": "Ọ bụrụ na ị chere na nwa gị nwere ụbụrụ dị iche, ebe ị ga-esi malite"
+   },
+   "summary": {
+    "en": "A calm first-steps guide for parents and carers.",
+    "ha": "Jagorar matakan farko cikin natsuwa ga iyaye da masu kulawa.",
+    "yo": "Ìtọ́sọ́nà ìgbésẹ̀ àkọ́kọ́ ní ìdákẹ́jẹ́ẹ́ fún òbí àti olùtọ́jú.",
+    "ig": "Ntụziaka usoro mbụ n’udo maka nne na nna na ndị na-elekọta."
+   },
+   "cover_image": "blog/covers/assess.png",
+   "cover_alt": "Abstract rose illustration of a supportive first step",
+   "body": "Write down what you notice at home and at school: when it happens, how often and what helps. Specific examples are more useful to a professional than general worries.\n\nSpeak to your child’s teacher and then to a qualified professional, such as a paediatrician, child psychiatrist or clinical psychologist. Diagnosis should come from a trained clinician, not from online checklists.\n\nThe World Health Organization’s ICD-11 describes autism spectrum disorder and ADHD under neurodevelopmental conditions, and clinicians use criteria like these when assessing. While you wait, you can already adjust routines, reduce sensory overload and keep communication kind and clear.",
+   "note": "You do not need a diagnosis to start helping.",
+   "source": "World Health Organization (2019). ICD-11, Chapter 6: Neurodevelopmental disorders. icd.who.int"
+  }
+ ],
+ "events": [
+  {
+   "date": "2026-11-14",
+   "tone": "green",
+   "title": {
+    "en": "Understanding ADHD: an open evening for families",
+    "ha": "Fahimtar ADHD: maraice a buɗe ga iyalai",
+    "yo": "Òye ADHD: ìrọ̀lẹ́ ṣíṣí sílẹ̀ fún àwọn ẹbí",
+    "ig": "Ịghọta ADHD: mgbede mepere emepe maka ezinụlọ"
+   },
+   "description": {
+    "en": "A plain-language talk and Q&A for parents, siblings and friends. Online and free.",
+    "ha": "Jawabi mai sauƙi da tambaya da amsa ga iyaye, ’yan’uwa da abokai. A yanar gizo, kyauta.",
+    "yo": "Ọ̀rọ̀ tó rọrùn àti ìbéèrè àti èsì fún òbí, ọmọ ìyá àti ọ̀rẹ́. Lórí ayélujára, ọ̀fẹ́.",
+    "ig": "Okwu dị mfe na ajụjụ na azịza maka nne na nna, ụmụnne na ndị enyi. Na ịntanetị, n’efu."
+   }
+  },
+  {
+   "date": "2026-12-05",
+   "tone": "indigo",
+   "title": {
+    "en": "Sensory-friendly meet-up for neurodivergent adults",
+    "ha": "Taron haɗuwa mai natsuwa ga manya masu bambancin kwakwalwa",
+    "yo": "Ìpàdé ìdákẹ́jẹ́ẹ́ fún àwọn àgbàlagbà tí ọpọlọ wọn yàtọ̀",
+    "ig": "Nzukọ udo maka ndị okenye ụbụrụ ha dị iche"
+   },
+   "description": {
+    "en": "A quieter, low-pressure space to meet others. Lagos, with an online room.",
+    "ha": "Wuri mai natsuwa, babu matsi, don saduwa da wasu. Legas, da kuma ɗakin yanar gizo.",
+    "yo": "Ibi ìdákẹ́jẹ́ẹ́, láìsí ìdààmú, láti pàdé àwọn ẹlòmíràn. Èkó, àti yàrá orí ayélujára.",
+    "ig": "Ebe dị jụụ, enweghị nrụgide, iji zute ndị ọzọ. Lagos, na ọnụ ụlọ ịntanetị."
+   }
+  },
+  {
+   "date": "2027-01-23",
+   "tone": "rose",
+   "title": {
+    "en": "Inclusive classrooms workshop for teachers",
+    "ha": "Bita kan azuzuwa masu haɗa kowa ga malamai",
+    "yo": "Ìdánilẹ́kọ̀ọ́ kíláàsì tó gba gbogbo ènìyàn fún àwọn olùkọ́",
+    "ig": "Ogbako maka ụlọ klaasị na-anabata mmadụ niile maka ndị nkụzi"
+   },
+   "description": {
+    "en": "Practical adjustments teachers can make this term without special equipment.",
+    "ha": "Gyare-gyare masu sauƙi da malamai za su iya yi a wannan zangon karatu ba tare da kayan musamman ba.",
+    "yo": "Àwọn àtúnṣe tó rọrùn tí olùkọ́ lè ṣe ní ìgbà ẹ̀kọ́ yìí láìsí ohun èlò pàtàkì.",
+    "ig": "Mgbanwe dị mfe ndị nkụzi nwere ike ime n’oge a na-enweghị ngwá pụrụ iche."
+   }
+  }
+ ],
+ "resources": [
+  {
+   "kind": "article",
+   "title": "Neurodiversity: a revolutionary concept for autism and psychiatry",
+   "by": "Baron-Cohen, S. (2017), Journal of Child Psychology and Psychiatry",
+   "note": "A short commentary on how the neurodiversity idea applies to autism.",
+   "url": "",
+   "order": 0
+  },
+  {
+   "kind": "article",
+   "title": "Deficit, difference, or both? Autism and neurodiversity",
+   "by": "Kapp, S. K., et al. (2013), Developmental Psychology",
+   "note": "Explores the deficit versus difference debate around autism.",
+   "url": "",
+   "order": 1
+  },
+  {
+   "kind": "article",
+   "title": "Neurodiversity at work: a biopsychosocial model and the impact on working adults",
+   "by": "Doyle, N. (2020), British Medical Bulletin",
+   "note": "Background for employers and colleagues.",
+   "url": "",
+   "order": 2
+  },
+  {
+   "kind": "article",
+   "title": "Universal Design for Learning Guidelines",
+   "by": "CAST (2018)",
+   "note": "A teaching framework that works for many kinds of learners.",
+   "url": "https://udlguidelines.cast.org",
+   "order": 3
+  },
+  {
+   "kind": "article",
+   "title": "ICD-11, Chapter 6: Neurodevelopmental disorders",
+   "by": "World Health Organization (2019)",
+   "note": "The international classification that clinicians use.",
+   "url": "https://icd.who.int",
+   "order": 4
+  },
+  {
+   "kind": "book",
+   "title": "NeuroTribes",
+   "by": "Steve Silberman (2015)",
+   "note": "A history of autism and the rise of the neurodiversity movement.",
+   "url": "",
+   "order": 0
+  },
+  {
+   "kind": "book",
+   "title": "Thinking in Pictures",
+   "by": "Temple Grandin (1995)",
+   "note": "An autistic woman describes how her mind works.",
+   "url": "",
+   "order": 1
+  },
+  {
+   "kind": "book",
+   "title": "Uniquely Human",
+   "by": "Barry M. Prizant (2015)",
+   "note": "Looks at autistic behaviour as a way of coping, not a problem to fix.",
+   "url": "",
+   "order": 2
+  },
+  {
+   "kind": "book",
+   "title": "The Reason I Jump",
+   "by": "Naoki Higashida, translated by K. A. Yoshida and David Mitchell (2013)",
+   "note": "A memoir by a young autistic writer who does not speak.",
+   "url": "",
+   "order": 3
+  },
+  {
+   "kind": "magazine",
+   "title": "Spectrum",
+   "by": "Simons Foundation",
+   "note": "Independent news on autism research.",
+   "url": "https://www.spectrumnews.org",
+   "order": 0
+  },
+  {
+   "kind": "magazine",
+   "title": "Autism in Adulthood",
+   "by": "Journal, Mary Ann Liebert",
+   "note": "Peer-reviewed research on autistic adults.",
+   "url": "",
+   "order": 1
+  },
+  {
+   "kind": "magazine",
+   "title": "Autism",
+   "by": "Journal, SAGE",
+   "note": "Peer-reviewed research on autism across the lifespan.",
+   "url": "",
+   "order": 2
+  },
+  {
+   "kind": "video",
+   "title": "The world needs all kinds of minds",
+   "by": "Temple Grandin, TED (2010)",
+   "note": "A talk on why different ways of thinking matter.",
+   "url": "",
+   "order": 0
+  },
+  {
+   "kind": "video",
+   "title": "The forgotten history of autism",
+   "by": "Steve Silberman, TED (2015)",
+   "note": "A talk on how autism has been understood over time.",
+   "url": "",
+   "order": 1
+  }
+ ]
+}
