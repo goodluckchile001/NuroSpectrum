@@ -1,18 +1,18 @@
 @import 'tailwindcss';
 
-:root{--bg:#F4F6F5;--surface:#FFFFFF;--ink:#1D1A2F;--muted:#55546B;--line:#D5D9DA;--green:#0F6B4F;--indigo:#3A3FA8;--gold:#E9B02A;--rose:#C23A7B;--on:#fff;
+:root{--bg:#F3F6F4;--surface:#FFFFFF;--ink:#18221F;--muted:#56645F;--line:#D7E0DB;--green:#126B50;--indigo:#3B4FB3;--gold:#D89C21;--rose:#C23A7B;--on:#fff;
 --head:var(--font-head),"Helvetica Neue",Arial,sans-serif;--body:var(--font-body),Verdana,Arial,sans-serif;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12111F;--surface:#1D1B33;--ink:#EEEDF7;--muted:#B0AFC8;--line:#35334F;--green:#3DC59B;--indigo:#8A8FF5;--gold:#F2C14E;--rose:#EE76AB;--on:#12111F}}
 :root[data-theme="dark"]{--bg:#12111F;--surface:#1D1B33;--ink:#EEEDF7;--muted:#B0AFC8;--line:#35334F;--green:#3DC59B;--indigo:#8A8FF5;--gold:#F2C14E;--rose:#EE76AB;--on:#12111F}
 html{scroll-padding-top:env(safe-area-inset-top,0px);color-scheme:light dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 1.1rem/1.7 var(--body)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.7 var(--body);letter-spacing:.005em}
 a{color:inherit}:focus-visible{outline:3px solid var(--indigo);outline-offset:3px}
-.wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem}
-header{padding:1rem 0;border-bottom:1px solid var(--line)}
+.wrap{max-width:72rem;margin:0 auto;padding:0 1.5rem}
+header{padding:1.1rem 0;border-bottom:1px solid color-mix(in srgb,var(--line) 75%,transparent)}
 .bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.75rem}
-.logo{font:800 1.4rem var(--head);text-decoration:none;letter-spacing:-.02em}
+.logo{display:inline-flex;align-items:center;gap:.6rem;font:800 1.35rem var(--head);text-decoration:none;letter-spacing:-.03em}.logo::before{content:"";width:1.85rem;height:1.85rem;border-radius:.55rem;background:linear-gradient(135deg,var(--green) 0 34%,var(--gold) 34% 61%,var(--indigo) 61%);box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--surface) 72%,transparent)}
 nav{display:flex;flex-wrap:wrap;gap:.25rem 1.1rem;font-family:var(--head);font-weight:600}
 nav a{text-decoration:none;color:var(--muted);padding:.25rem 0;border-bottom:3px solid transparent}
 nav a[aria-current="page"]{color:var(--ink);border-color:var(--gold)}
@@ -186,8 +186,9 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 9
 .site-nav{min-width:0}
 .site-nav nav a{transition:color .16s ease,border-color .16s ease}
 .site-nav nav a[aria-current="page"]{font-weight:700}
-.hero{position:relative;isolation:isolate;overflow:hidden;padding:clamp(3.5rem,9vw,6.5rem) 0}
-.hero::after{content:"";position:absolute;z-index:-1;width:22rem;height:22rem;right:-8rem;top:1rem;border-radius:50%;background:radial-gradient(circle,var(--gold) 0%,transparent 68%);opacity:.16;pointer-events:none}
+.hero{position:relative;isolation:isolate;overflow:hidden;padding:clamp(4.5rem,11vw,8rem) clamp(1.25rem,5vw,4.5rem);margin-inline:-1.5rem;border:1px solid color-mix(in srgb,var(--line) 72%,transparent);border-radius:1.25rem;background:linear-gradient(135deg,color-mix(in srgb,var(--surface) 94%,var(--green)),color-mix(in srgb,var(--surface) 88%,var(--indigo)));box-shadow:0 18px 50px color-mix(in srgb,var(--ink) 8%,transparent)}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 0 58%,color-mix(in srgb,var(--gold) 11%,transparent) 58% 72%,transparent 72%);z-index:-1;pointer-events:none}
+.hero::after{content:"";position:absolute;z-index:-1;width:25rem;height:25rem;right:-9rem;top:-5rem;border-radius:50%;background:radial-gradient(circle,var(--gold) 0%,transparent 68%);opacity:.2;pointer-events:none}
 .hero h1{max-width:15ch;font-size:clamp(2.7rem,8vw,5.25rem);line-height:1.02;text-wrap:balance}
 .hero .lede{max-width:42rem;font-size:clamp(1.15rem,2.4vw,1.35rem)}
 .hero .weave{max-width:44rem}
@@ -228,6 +229,7 @@ textarea{resize:vertical;min-height:8rem}
 }
 @media(max-width:480px){
   .wrap{padding-inline:1rem}
+  .hero{margin-inline:-1rem;border-radius:.9rem;padding-inline:1.25rem}
   .logo{font-size:1.15rem}
   .header-controls{gap:.3rem}
   .header-controls .lang{max-width:6.25rem;padding-inline:.35rem;font-size:.82rem}
