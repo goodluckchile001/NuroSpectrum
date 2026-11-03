@@ -89,7 +89,7 @@ const nextConfig = {
 }
 export default nextConfig
 ```
-The website is wired to this proxy and uses django-allauth for Google sign-in. Set `API_ORIGIN` in the website environment to the backend origin (defaults to `http://localhost:8000`). The login/logout pages use the allauth browser API, and account state, profile updates and community joins use the Django session cookie.
+The website is wired to this proxy and uses django-allauth for Google sign-in. Set `NEXT_PUBLIC_API_URL` in the website environment to the backend origin (defaults to `http://localhost:8000`). The legacy `API_ORIGIN` setting is also supported. The login/logout pages use the allauth browser API, and account state, profile updates and community joins use the Django session cookie.
 
 Frontend recipes (all same-origin, `credentials: 'same-origin'` is the default):
 ```ts
@@ -133,7 +133,7 @@ The story and partner forms submit directly to the API and surface validation er
 - `nurospectrum-backend/.env.production.example` is a template, not a deployable environment file. Set its values in your hosting provider. The current Render hostname is `nurospectrum.onrender.com`; the app also allows Render's `RENDER_EXTERNAL_HOSTNAME` automatically.
 - On Render, set the service root directory to `nurospectrum-backend`, use its Dockerfile, and set `/healthz` as the health-check path. The container applies migrations before serving requests, so a separate pre-deploy command is not required. Configure a managed PostgreSQL database and use its internal connection URL as `DATABASE_URL`. Set a long, random `SECRET_KEY` using the command in the environment template.
 - Attach persistent storage and set `MEDIA_ROOT` to its mount path before launch. After deployment, run `python manage.py seed_site` once from the Render Shell so generated cover images are written to the persistent disk; run it again after removing the seed image files. Do not run image seeding as a pre-deploy command because that command's filesystem is not the running service's disk.
-- On Vercel, set the project root directory to `nurospectrum-website` and configure `NEXT_PUBLIC_SITE_URL` and `API_ORIGIN` from `nurospectrum-website/.env.production.example`. `API_ORIGIN` must be `https://nurospectrum.onrender.com`. Redeploy after setting environment variables.
+- On Vercel, set the project root directory to `nurospectrum-website` and configure `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_API_URL` from `nurospectrum-website/.env.production.example`. `NEXT_PUBLIC_API_URL` must be `https://nurospectrum.onrender.com`. Redeploy after setting environment variables.
 - Google sign-in is hidden while `NEXT_PUBLIC_GOOGLE_SIGN_IN_ENABLED=false`. When ready, configure the OAuth client ID and secret in Render, add `https://nurospectrum-website.vercel.app/accounts/google/login/callback/` as an authorized redirect URI in Google Cloud, set the frontend flag to `true` in Vercel, then redeploy.
 - Configure an SMTP provider before launch; without `EMAIL_HOST`, Django uses the console backend and inquiries will not be delivered by email.
 - Blog uploads require persistent storage. Render persistent disks may require a paid service plan; confirm the hosting cost before enabling uploads. Set `MEDIA_ROOT` to the disk mount path or configure object storage before accepting uploads; deploy containers' local filesystems are not a durable media store.
