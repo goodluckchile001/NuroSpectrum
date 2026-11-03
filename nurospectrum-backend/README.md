@@ -33,7 +33,7 @@ Run the tests with `python manage.py test`.
 - **State communities**: paste each state's WhatsApp invite link in the list view. States with no link use `WHATSAPP_NATIONAL_URL`.
 - **Stories**: select pending stories and use the "Approve" or "Reject" action. Nothing is public until approved.
 - **Partner inquiries**: tick "handled" when answered. New ones are also emailed to `INQUIRY_NOTIFY_EMAIL`.
-- **Posts / Events / Resources**: add or edit content. Untranslated languages fall back to English in the frontend.
+- **Blog posts / Events / Resources**: add or edit content. Blog post and event translations have separate English, Hausa, Yorùbá and Igbo fields; no JSON editing is needed. English is required, other languages are optional, and a blog post's web address is generated from its English title. Untranslated languages fall back to English in the frontend.
 - **Blog images**: upload an optional cover image on a post; it appears on the blog card and at the top of the article. Add smaller images in the post's inline section and set their paragraph position, caption and alt text. JPG, PNG and WebP files up to 5 MB are supported.
 - `seed_site` never overwrites existing items, so it is safe to re-run.
 - Event dates in the seed file are assumed to be 14 Nov 2026, 5 Dec 2026 and 23 Jan 2027. Edit them in the admin.

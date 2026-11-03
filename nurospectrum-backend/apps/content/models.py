@@ -34,6 +34,8 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['published_at', 'id']
+        verbose_name = 'blog post'
+        verbose_name_plural = 'blog posts'
 
     def __str__(self):
         return self.title.get('en', self.slug)

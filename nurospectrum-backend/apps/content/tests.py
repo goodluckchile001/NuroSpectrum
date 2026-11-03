@@ -6,7 +6,71 @@ from django.test import TestCase, override_settings
 from django.utils import timezone
 from rest_framework.test import APIClient
 
+from .admin import EventAdminForm, PostAdminForm
 from .models import Event, Post, PostImage, Resource
+
+
+class ContentAdminFormTests(TestCase):
+    def test_blog_post_form_generates_slug_and_saves_translations(self):
+        form = PostAdminForm(data={
+            'title_en': 'A Guide to Neurodiversity',
+            'title_ha': 'Jagora',
+            'tag_en': 'Wellbeing',
+            'summary_en': 'An introduction.',
+            'summary_ha': 'Gabatarwa.',
+            'body': 'Article text.',
+            'tone': 'green',
+            'published_at': timezone.localtime().strftime('%Y-%m-%d %H:%M:%S'),
+        })
+
+        self.assertTrue(form.is_valid(), form.errors)
+        post = form.save()
+
+        self.assertEqual(post.slug, 'a-guide-to-neurodiversity')
+        self.assertEqual(post.title, {'en': 'A Guide to Neurodiversity', 'ha': 'Jagora'})
+        self.assertEqual(post.tag, {'en': 'Wellbeing'})
+        self.assertEqual(post.summary, {'en': 'An introduction.', 'ha': 'Gabatarwa.'})
+        self.assertEqual(Post._meta.verbose_name, 'blog post')
+        self.assertNotIn('title', form.fields)
+        self.assertNotIn('summary', form.fields)
+
+    def test_blog_post_form_updates_slug_when_title_changes(self):
+        post = Post.objects.create(
+            slug='old-title',
+            title={'en': 'Old title'},
+            tag={'en': 'Tag'},
+            summary={'en': 'Summary'},
+            body='Article text.',
+        )
+        form = PostAdminForm(instance=post, data={
+            'title_en': 'A New Title',
+            'tag_en': 'Tag',
+            'summary_en': 'Summary',
+            'body': 'Updated article text.',
+            'tone': 'green',
+            'published': '',
+            'published_at': post.published_at.isoformat(),
+        })
+
+        self.assertTrue(form.is_valid(), form.errors)
+        self.assertEqual(form.save().slug, 'a-new-title')
+
+    def test_event_form_saves_translations_without_json_fields(self):
+        form = EventAdminForm(data={
+            'title_en': 'Community meeting',
+            'title_ha': "Taron al'umma",
+            'description_en': 'Meet and connect.',
+            'date': '2026-11-14',
+            'tone': 'green',
+        })
+
+        self.assertTrue(form.is_valid(), form.errors)
+        event = form.save()
+
+        self.assertEqual(event.title, {'en': 'Community meeting', 'ha': "Taron al'umma"})
+        self.assertEqual(event.description, {'en': 'Meet and connect.'})
+        self.assertNotIn('title', form.fields)
+        self.assertNotIn('description', form.fields)
 
 
 class ContentApiTests(TestCase):
