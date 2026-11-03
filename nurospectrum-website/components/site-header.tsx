@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/components/auth-provider'
 import { useSite } from '@/context/site-context'
-import { LANGUAGES } from '@/lib/site'
+import { googleSignInEnabled, LANGUAGES } from '@/lib/site'
 
 export const NAV = [
   { href: '/', section: '' },
@@ -89,8 +89,11 @@ export function SiteHeader() {
             </nav>
             <div className="tools">
               {profile ? (
-                <Link className="calm" href="/logout">{t('signout')}</Link>
-              ) : !loading ? (
+                <>
+                  <Link className="calm" href="/profile">{t('profileTitle')}</Link>
+                  <Link className="calm" href="/logout">{t('signout')}</Link>
+                </>
+              ) : !loading && googleSignInEnabled ? (
                 <Link className="signin" href="/login">{t('signin')}</Link>
               ) : null}
             </div>

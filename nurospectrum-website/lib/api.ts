@@ -87,7 +87,7 @@ export async function csrfToken() {
   return decodeURIComponent(readCookie('csrftoken') || '')
 }
 
-async function errorMessage(response: Response) {
+export async function responseErrorMessage(response: Response) {
   const text = await response.text()
   if (text) {
     try {
@@ -95,10 +95,13 @@ async function errorMessage(response: Response) {
       if (typeof body === 'string') return body
       if (body && typeof body === 'object') {
         const values = Object.values(body)
-        const message = values.flatMap((value) => Array.isArray(value) ? value : [value])
-          .filter((value): value is string => typeof value === 'string')
-          .join(' ')
-        if (message) return message
+        const messages = values.flatMap((value) => {
+          if (!Array.isArray(value)) return [value]
+          return value.map((item) => item && typeof item === 'object' && 'message' in item
+            ? item.message
+            : item)
+        }).filter((value): value is string => typeof value === 'string')
+        if (messages.length) return messages.join(' ')
       }
     } catch {
       return `API request failed (HTTP ${response.status}).`
@@ -122,7 +125,7 @@ export async function apiRequest<T>(path: string, init: RequestInit = {}): Promi
     credentials: 'same-origin',
     cache: 'no-store',
   })
-  if (!response.ok) throw new ApiError(await errorMessage(response), response.status)
+  if (!response.ok) throw new ApiError(await responseErrorMessage(response), response.status)
   return response.json() as Promise<T>
 }
 

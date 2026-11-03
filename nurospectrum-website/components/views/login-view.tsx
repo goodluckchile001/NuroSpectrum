@@ -1,15 +1,16 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { useAuth } from '@/components/auth-provider'
-import { csrfToken, apiErrorMessage } from '@/lib/api'
+import { csrfToken, responseErrorMessage } from '@/lib/api'
 import { useSite } from '@/context/site-context'
+import { googleSignInEnabled } from '@/lib/site'
 
 /** Only allow same-site paths, and never bounce back to the auth pages. */
-function safePath(p: string | null) {
-  if (!p || !p.startsWith('/') || p.startsWith('//') || p.startsWith('/login') || p.startsWith('/logout')) return '/'
-  return p
+function safePath(path: string | null) {
+  if (!path || !path.startsWith('/') || path.startsWith('//') || path.startsWith('/login') || path.startsWith('/logout')) return '/'
+  return path
 }
 
 function GoogleG() {
@@ -23,61 +24,186 @@ function GoogleG() {
   )
 }
 
+type AuthMode = 'login' | 'signup'
+
 export function LoginView() {
   const { t } = useSite()
-  const { profile } = useAuth()
+  const { profile, refresh } = useAuth()
   const router = useRouter()
   const params = useSearchParams()
   const next = safePath(params.get('callbackUrl'))
+  const [mode, setMode] = useState<AuthMode>('login')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
 
   useEffect(() => {
     if (profile) router.replace(next)
   }, [profile, next, router])
 
+  function changeMode(nextMode: AuthMode) {
+    setMode(nextMode)
+    setError('')
+    setSuccess('')
+  }
+
+  async function submitCredentials(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setError('')
+    setSuccess('')
+    if (mode === 'signup' && password !== passwordConfirm) {
+      setError(t('passwordMismatch'))
+      return
+    }
+
+    setBusy(true)
+    try {
+      const csrf = await csrfToken()
+      const response = await fetch(`/_allauth/browser/v1/auth/${mode}`, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrf,
+        },
+        body: JSON.stringify({ email, password }),
+      })
+
+      if (mode === 'signup' && response.status === 401) {
+        setSuccess(t('signupCheckEmail'))
+        setMode('login')
+        setPassword('')
+        setPasswordConfirm('')
+        return
+      }
+
+      if (!response.ok) {
+        if (mode === 'login' && response.status === 401) {
+          setError(t('verifyBeforeLogin'))
+        } else {
+          setError(await responseErrorMessage(response))
+        }
+        return
+      }
+
+      await refresh()
+      router.replace(next)
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : t('liErr'))
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function signInWithGoogle() {
+    setBusy(true)
+    setError('')
+    try {
+      const csrf = await csrfToken()
+      const form = document.createElement('form')
+      form.method = 'POST'
+      form.action = '/_allauth/browser/v1/auth/provider/redirect'
+      for (const [name, value] of Object.entries({
+        provider: 'google',
+        process: 'login',
+        callback_url: next,
+        csrfmiddlewaretoken: csrf,
+      })) {
+        const input = document.createElement('input')
+        input.type = 'hidden'
+        input.name = name
+        input.value = value
+        form.appendChild(input)
+      }
+      document.body.appendChild(form)
+      form.submit()
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : t('liErr'))
+      setBusy(false)
+    }
+  }
+
   return (
     <div className="wrap">
       <section className="sec">
-        <h1>{t('signin')}</h1>
+        <h1>{mode === 'signup' ? t('createAccount') : t('signin')}</h1>
         <p className="lede">{t('liP')}</p>
         {(params.get('error') || error) && <div className="note" role="alert">{error || t('liErr')}</div>}
-        <div className="panel" style={{ maxWidth: '30rem' }}>
-          <button
-            className="btn gbtn"
-            type="button"
-            disabled={busy}
-            onClick={async () => {
-              setBusy(true)
-              setError('')
-              try {
-                const csrf = await csrfToken()
-                const form = document.createElement('form')
-                form.method = 'POST'
-                form.action = '/_allauth/browser/v1/auth/provider/redirect'
-                for (const [name, value] of Object.entries({
-                  provider: 'google',
-                  process: 'login',
-                  callback_url: next,
-                  csrfmiddlewaretoken: csrf,
-                })) {
-                  const input = document.createElement('input')
-                  input.type = 'hidden'
-                  input.name = name
-                  input.value = value
-                  form.appendChild(input)
-                }
-                document.body.appendChild(form)
-                form.submit()
-              } catch (requestError) {
-                setError(apiErrorMessage(requestError))
-                setBusy(false)
-              }
-            }}
-          >
-            <GoogleG />
-            {busy ? t('liBusy') : t('liBtn')}
-          </button>
+        {success && <div className="note" role="status">{success}</div>}
+
+        <div className="panel auth-panel">
+          <div className="auth-modes" role="group" aria-label={t('signin')}>
+            <button type="button" className={mode === 'login' ? 'auth-mode active' : 'auth-mode'} aria-pressed={mode === 'login'} onClick={() => changeMode('login')}>
+              {t('loginSubmit')}
+            </button>
+            <button type="button" className={mode === 'signup' ? 'auth-mode active' : 'auth-mode'} aria-pressed={mode === 'signup'} onClick={() => changeMode('signup')}>
+              {t('createAccount')}
+            </button>
+          </div>
+
+          <form onSubmit={submitCredentials}>
+            <label>
+              {t('emailLabel')}
+              <input
+                type="email"
+                name="email"
+                autoComplete="email"
+                required
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </label>
+            <label>
+              {t('passwordLabel')}
+              <input
+                type="password"
+                name="password"
+                autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
+                minLength={8}
+                required
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </label>
+            {mode === 'signup' && (
+              <label>
+                {t('confirmPassword')}
+                <input
+                  type="password"
+                  name="password-confirm"
+                  autoComplete="new-password"
+                  minLength={8}
+                  required
+                  value={passwordConfirm}
+                  onChange={(event) => setPasswordConfirm(event.target.value)}
+                />
+              </label>
+            )}
+            <button className="btn auth-submit" type="submit" disabled={busy}>
+              {busy ? t('authWorking') : mode === 'signup' ? t('signupSubmit') : t('loginSubmit')}
+            </button>
+          </form>
+
+          <p className="auth-switch">
+            {mode === 'signup' ? t('haveAccount') : t('needAccount')}
+            {' '}
+            <button type="button" onClick={() => changeMode(mode === 'signup' ? 'login' : 'signup')}>
+              {mode === 'signup' ? t('loginSubmit') : t('createAccount')}
+            </button>
+          </p>
+
+          {googleSignInEnabled && (
+            <>
+              <div className="auth-divider"><span>{t('orContinueWith')}</span></div>
+              <button className="btn gbtn auth-google" type="button" disabled={busy} onClick={signInWithGoogle}>
+                <GoogleG />
+                {busy ? t('liBusy') : t('liBtn')}
+              </button>
+            </>
+          )}
         </div>
       </section>
     </div>

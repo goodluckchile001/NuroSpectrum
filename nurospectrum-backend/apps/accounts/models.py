@@ -13,7 +13,7 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError('An email address is required.')
         user = self.model(email=self.normalize_email(email), **extra)
-        user.set_password(password)  # Google-only users intentionally get an unusable password.
+        user.set_password(password)
         user.save(using=self._db)
         return user
 

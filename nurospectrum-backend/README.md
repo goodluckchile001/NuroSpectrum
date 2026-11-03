@@ -1,11 +1,11 @@
 # Nurospectrum API
 
 Django + Django REST Framework backend for the Nurospectrum website.
-Google sign-in uses django-allauth in headless (API-only) mode, so the Next.js frontend never handles passwords.
+Email/password accounts and optional Google sign-in use django-allauth in headless (API-only) mode.
 
 | Area | What it does |
 |---|---|
-| `apps/accounts` | Email-based `User` (no username), `Profile` (state, language, role), Google-only sign-up |
+| `apps/accounts` | Email-based `User` (no username), `Profile` (state, language, role), email/password and Google sign-up |
 | `apps/content` | `Post` (blog), `Event`, `Resource` (Library). Text is stored per language: `{"en": "...", "ha": "..."}` |
 | `apps/community` | `StateCommunity` (WhatsApp links, editable in admin), `Membership`, `Story` (moderated), `PartnerInquiry` |
 
@@ -66,7 +66,7 @@ Sign-in/out and session endpoints come from allauth under `/_allauth/browser/v1/
    - `https://YOUR-SITE/accounts/google/login/callback/`
    - add the same paths on the Django host if you call it directly
 3. Put the client ID and secret in `.env` as `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`.
-4. Email/password sign-up is deliberately closed (`apps/accounts/adapters.py`). Only Google can create accounts.
+4. Email/password sign-up is enabled. Email verification is required before a new account can sign in; configure SMTP delivery for production.
 
 ## 5. Connecting the Next.js site
 
@@ -129,6 +129,14 @@ The story and partner forms submit directly to the API and surface validation er
 ## 6. Deploying
 - Set `DEBUG=false`, a real `SECRET_KEY`, `ALLOWED_HOSTS`, `CSRF_TRUSTED_ORIGINS`, `FRONTEND_URL`, `DATABASE_URL` (Postgres) and a hard-to-guess `ADMIN_URL`.
 - Run `python manage.py migrate` on each release. The Dockerfile serves with gunicorn and WhiteNoise handles admin static files.
+- The `/healthz` endpoint checks database connectivity and can be used as the platform health-check path.
+- `nurospectrum-backend/.env.production.example` is a template, not a deployable environment file. Set its values in your hosting provider. The current Render hostname is `nurospectrum.onrender.com`; the app also allows Render's `RENDER_EXTERNAL_HOSTNAME` automatically.
+- On Render, set the service root directory to `nurospectrum-backend`, use its Dockerfile, set `/healthz` as the health-check path, and run `python manage.py migrate` as the pre-deploy command. Configure a managed PostgreSQL database and use its internal connection URL as `DATABASE_URL`. Set a long, random `SECRET_KEY` using the command in the environment template.
+- Attach persistent storage and set `MEDIA_ROOT` to its mount path before launch. After deployment, run `python manage.py seed_site` once from the Render Shell so generated cover images are written to the persistent disk; run it again after removing the seed image files. Do not run image seeding as a pre-deploy command because that command's filesystem is not the running service's disk.
+- On Vercel, set the project root directory to `nurospectrum-website` and configure `NEXT_PUBLIC_SITE_URL` and `API_ORIGIN` from `nurospectrum-website/.env.production.example`. `API_ORIGIN` must be `https://nurospectrum.onrender.com`. Redeploy after setting environment variables.
+- Google sign-in is hidden while `NEXT_PUBLIC_GOOGLE_SIGN_IN_ENABLED=false`. When ready, configure the OAuth client ID and secret in Render, add `https://nurospectrum-website.vercel.app/accounts/google/login/callback/` as an authorized redirect URI in Google Cloud, set the frontend flag to `true` in Vercel, then redeploy.
+- Configure an SMTP provider before launch; without `EMAIL_HOST`, Django uses the console backend and inquiries will not be delivered by email.
+- Blog uploads require persistent storage. Render persistent disks may require a paid service plan; confirm the hosting cost before enabling uploads. Set `MEDIA_ROOT` to the disk mount path or configure object storage before accepting uploads; deploy containers' local filesystems are not a durable media store.
 - Behind a load balancer set `NUM_PROXIES` so rate limiting sees real client IPs.
 - Rate-limit counters are kept in each process's memory by default. With several workers, switch Django's cache to Redis or the database cache so limits are shared.
 - Back up the database. Stories and member data are personal.

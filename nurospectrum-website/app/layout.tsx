@@ -6,17 +6,42 @@ import { AuthProvider } from '@/components/auth-provider'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'
 import { SiteProvider } from '@/context/site-context'
+import { SITE_URL } from '@/lib/seo'
 import './globals.css'
 
 const bodyFont = Atkinson_Hyperlegible({ subsets: ['latin', 'latin-ext'], weight: ['400', '700'], variable: '--font-body', display: 'swap' })
 const headFont = Bricolage_Grotesque({ subsets: ['latin', 'latin-ext'], variable: '--font-head', display: 'swap' })
 
 export const metadata: Metadata = {
+  metadataBase: SITE_URL,
   title: {
     default: 'Nurospectrum: a Nigeria that works with and for neurodivergent minds',
     template: '%s · Nurospectrum',
   },
   description: 'Nurospectrum is an education and community platform raising awareness of neurodiversity across Nigeria. Every mind is welcome here.',
+  applicationName: 'Nurospectrum',
+  category: 'education',
+  creator: 'Nurospectrum',
+  publisher: 'Nurospectrum',
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    locale: 'en_NG',
+    siteName: 'Nurospectrum',
+    title: 'Nurospectrum: a Nigeria that works with and for neurodivergent minds',
+    description: 'Education, community and practical support for neurodivergent people and allies across Nigeria.',
+    url: '/',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Nurospectrum: a Nigeria that works with and for neurodivergent minds',
+    description: 'Education, community and practical support for neurodivergent people and allies across Nigeria.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
+  },
   icons: {
     icon: [
       { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' },
@@ -37,6 +62,28 @@ export const viewport: Viewport = {
 }
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': new URL('/#organization', SITE_URL).href,
+        name: 'Nurospectrum',
+        url: SITE_URL.href,
+        description: 'An education and community platform raising awareness of neurodiversity across Nigeria.',
+        areaServed: { '@type': 'Country', name: 'Nigeria' },
+      },
+      {
+        '@type': 'WebSite',
+        '@id': new URL('/#website', SITE_URL).href,
+        name: 'Nurospectrum',
+        url: SITE_URL.href,
+        inLanguage: ['en', 'ha', 'yo', 'ig'],
+        publisher: { '@id': new URL('/#organization', SITE_URL).href },
+      },
+    ],
+  }
+
   return (
     <html lang="en" className={`${bodyFont.variable} ${headFont.variable}`} suppressHydrationWarning>
       <head>
@@ -48,6 +95,10 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         />
       </head>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }}
+        />
         <AuthProvider>
           <SiteProvider>
             <SiteHeader />

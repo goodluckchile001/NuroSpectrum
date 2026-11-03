@@ -18,6 +18,14 @@ def env_list(name, default=''):
     return [x.strip() for x in os.environ.get(name, default).split(',') if x.strip()]
 
 
+def configured_allowed_hosts():
+    hosts = env_list('ALLOWED_HOSTS', 'localhost,127.0.0.1')
+    render_hostname = os.environ.get('RENDER_EXTERNAL_HOSTNAME', '').strip()
+    if render_hostname and render_hostname not in hosts:
+        hosts.append(render_hostname)
+    return hosts
+
+
 # --- Core -------------------------------------------------------------------
 DEBUG = env_bool('DEBUG', False)  # secure by default: you must opt in to debug
 
@@ -28,7 +36,7 @@ if not SECRET_KEY:
     else:
         raise ImproperlyConfigured('Set the SECRET_KEY environment variable.')
 
-ALLOWED_HOSTS = env_list('ALLOWED_HOSTS', 'localhost,127.0.0.1')
+ALLOWED_HOSTS = configured_allowed_hosts()
 CSRF_TRUSTED_ORIGINS = env_list('CSRF_TRUSTED_ORIGINS')
 FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:3000').rstrip('/')
 ADMIN_URL = os.environ.get('ADMIN_URL', 'admin/')
@@ -52,6 +60,7 @@ INSTALLED_APPS = [
     'apps.accounts',
     'apps.content',
     'apps.community',
+    'apps.common',
 ]
 
 MIDDLEWARE = [
@@ -107,8 +116,8 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# django-allauth, headless (API) mode with Google sign-in only.
-ACCOUNT_ADAPTER = 'apps.accounts.adapters.AccountAdapter'  # blocks email/password sign-ups
+# django-allauth, headless (API) mode with email/password and optional Google sign-in.
+ACCOUNT_ADAPTER = 'apps.accounts.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'apps.accounts.adapters.SocialAccountAdapter'  # allows Google sign-ups
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_LOGIN_METHODS = {'email'}
@@ -184,7 +193,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = Path(os.environ.get('MEDIA_ROOT', BASE_DIR / 'media'))
 STORAGES = {
     'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
     'staticfiles': {'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage'},

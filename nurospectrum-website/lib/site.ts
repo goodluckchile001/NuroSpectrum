@@ -11,6 +11,8 @@ export const LANGUAGES = [
   { code: 'ig', label: 'Igbo' },
 ] as const
 
+export const googleSignInEnabled = process.env.NEXT_PUBLIC_GOOGLE_SIGN_IN_ENABLED === 'true'
+
 export const TONES: Tone[] = ['green', 'indigo', 'gold', 'rose']
 
 /** Sets the --c custom property used by .path, .post, .res, .ev, .note. */

@@ -80,6 +80,7 @@ class StoryTests(TestCase):
     def payload(self, **extra):
         return {'text': LONG_TEXT, 'consent': True, 'is_anonymous': True, **extra}
 
+    @override_settings(TURNSTILE_SECRET_KEY='')
     def test_story_is_saved_as_pending_and_not_echoed(self):
         response = self.client.post('/api/stories', self.payload(), format='json')
         self.assertEqual(response.status_code, 201)
@@ -115,6 +116,7 @@ class PartnerInquiryTests(TestCase):
         cache.clear()
         self.client = APIClient()
 
+    @override_settings(TURNSTILE_SECRET_KEY='')
     @override_settings(INQUIRY_NOTIFY_EMAIL='team@example.com')
     def test_inquiry_is_saved_and_emailed(self):
         response = self.client.post('/api/partner-inquiries', {

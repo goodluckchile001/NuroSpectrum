@@ -3,10 +3,7 @@ from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
 
 class AccountAdapter(DefaultAccountAdapter):
-    """People sign in with Google only, so email/password sign-up is closed."""
-
-    def is_open_for_signup(self, request):
-        return False
+    """Use django-allauth's standard email/password account behavior."""
 
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):

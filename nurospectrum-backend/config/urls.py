@@ -3,9 +3,11 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls.static import static
 
+from apps.common.views import health_check
 from config.api import api_urlpatterns
 
 urlpatterns = [
+    path('healthz', health_check, name='health-check'),
     path(settings.ADMIN_URL, admin.site.urls),
     # Google OAuth callback lives here: /accounts/google/login/callback/
     path('accounts/', include('allauth.urls')),

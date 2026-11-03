@@ -9,7 +9,13 @@ const nextConfig = {
     return [{ source: '/about', destination: '/#about', permanent: false }]
   },
   async rewrites() {
-    const api = process.env.API_ORIGIN || 'http://localhost:8000'
+    const configuredApi = process.env.API_ORIGIN?.trim().replace(/\/+$/, '')
+    const isPlaceholder = configuredApi?.includes('YOUR-RENDER-SERVICE')
+    const isLocalProductionOrigin = process.env.NODE_ENV === 'production'
+      && /^https?:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?$/i.test(configuredApi || '')
+    const api = !configuredApi || isPlaceholder || isLocalProductionOrigin
+      ? 'https://nurospectrum.onrender.com'
+      : configuredApi
     return [
       { source: '/api/:path*', destination: `${api}/api/:path*` },
       { source: '/media/:path*', destination: `${api}/media/:path*` },
